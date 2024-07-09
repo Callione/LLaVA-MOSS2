@@ -112,6 +112,19 @@ def load_pretrained_model(model_path, model_base, model_name, load_8bit=False, l
                     low_cpu_mem_usage=True,
                     **kwargs
                 )
+            elif 'moss2' in model_name.lower():
+                import llava.model.language_model.llava_moss2 as lmo2
+                from .language_model.moss.tokenization_moss2 import Moss2Tokenizer
+                tokenizer = Moss2Tokenizer.from_pretrained(model_path,use_fast=True)
+                print('loading llava_moss2')
+                model = lmo2.LlavaMoss2ForCausalLM.from_pretrained(model_path, low_cpu_mem_usage=True, **kwargs)
+                print('finished')
+                # In case you put the projector weight seperately
+                if os.path.exists(os.path.join(model_path,'mm_projector.bin')):
+                    mm_projector_weights = torch.load(os.path.join(model_path, 'mm_projector.bin'), map_location='cpu')
+                    mm_projector_weights = {k: v.to(torch.float16) for k, v in mm_projector_weights.items()}
+                    model.load_state_dict(mm_projector_weights, strict=False)
+                
             else:
                 tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False)
                 model = LlavaLlamaForCausalLM.from_pretrained(
