@@ -882,6 +882,13 @@ def train(attn_implementation=None):
             model_max_length=training_args.model_max_length,
             padding_side="right"
         )
+    elif 'moss2' in model_args.model_name_or_path:
+        import llava.model.language_model.llava_moss2 as lmo2
+        model = lmo2.LlavaMoss2ForCausalLM.from_pretrained(model_args.model_name_or_path)
+        if model_args.pretrain_mm_mlp_adapter is not None:
+            mm_projector_weights = torch.load(model_args.pretrain_mm_mlp_adapter, map_location='cpu')
+            mm_projector_weights = {k: v.to(torch.float16) for k, v in mm_projector_weights.items()}
+            model.load_state_dict(mm_projector_weights, strict=False)
     else:
         tokenizer = transformers.AutoTokenizer.from_pretrained(
             model_args.model_name_or_path,
