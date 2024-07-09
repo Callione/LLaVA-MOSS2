@@ -26,13 +26,13 @@ pip install flash-attn --no-build-isolation
 
 ## Train
 
-LLaVA-Moss training consists of two stages: (1) feature alignment stage: use 558K subset of the LAION-CC-SBU dataset to connect a *frozen pretrained* vision encoder to a *frozen LLM*; (2) visual instruction tuning stage: use [Llava-Instruct-665k](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K/blob/main/llava_v1_5_mix665k.json)
+LLaVA-MOSS2 training consists of two stages: (1) feature alignment stage: use 558K subset of the LAION-CC-SBU dataset to connect a *frozen pretrained* vision encoder to a *frozen LLM*; (2) visual instruction tuning stage: use [Llava-Instruct-665k](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K/blob/main/llava_v1_5_mix665k.json)
 
 To train on fewer GPUs, you can reduce the `per_device_train_batch_size` and increase the `gradient_accumulation_steps` accordingly. Always keep the global batch size the same: `per_device_train_batch_size` x `gradient_accumulation_steps` x `num_gpus`.
 
-### Download Moss-2 2.5B
+### Download MOSS-2 2.5B
 
-Our base model Moss-2 2.5B: https://huggingface.co/fnlp/moss2-2_5b-chat
+Download our base model MOSS-2 2.5B: https://huggingface.co/fnlp/moss2-2_5b-chat
 
 ### Pretrain (feature alignment)
 
@@ -108,4 +108,4 @@ python -m llava.serve.cli \
 
 ## Acknowledgement
 
-- [Llava](https://github.com/haotian-liu/LLaVA): the codebase we built upon and the data we use.
+- [LLava](https://github.com/haotian-liu/LLaVA): the codebase we built upon and the data we use.
