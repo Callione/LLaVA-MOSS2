@@ -16,8 +16,8 @@ deepspeed llava/train/train_mem.py \
     --deepspeed ./scripts/zero2.json \
     --model_name_or_path /path-to-ckpt-parent-dir/$MODEL_VERSION \
     --version $PROMPT_VERSION \
-    --data_path /path/to/pretrain_data.json \
-    --image_folder /path/to/images \
+    --data_path ./playground/data/pretrain/blip_laion_cc_sbu_558k.json \
+    --image_folder ./playground/data/pretrain/images \
     --vision_tower openai/clip-vit-large-patch14 \
     --tune_mm_mlp_adapter True \
     --mm_vision_select_layer -2 \

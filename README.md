@@ -91,13 +91,17 @@ The second step changed the model_type to "llava_moss2", and added some multimod
 
 ### Pretrain (feature alignment)
 
-Please download the 558K subset of the LAION-CC-SBU dataset with BLIP captions, data is [here](https://huggingface.co/datasets/liuhaotian/LLaVA-Pretrain).
+Please download the 558K subset of the LAION-CC-SBU dataset with BLIP captions, data is [here](https://huggingface.co/datasets/liuhaotian/LLaVA-Pretrain). Put the in directory `./playground/data/pretrain`, organize them as follows:
+
+```
+├── blip_laion_cc_sbu_558k.json
+└── image
+```
+
 
 Training script with DeepSpeed ZeRO-2: [`./scripts/pretrain.sh`](https://github.com/haotian-liu/LLaVA/blob/main/scripts/pretrain.sh).
 
 - `--model_name_or_path`: set this with path to the checkpoint
-- `--data_path`: set this with path to json file of pretrain data
-- `--image_folder`: set this with path to the image folder of the pretrain data
 - `--output_dir`: set this dir for saving the pretrained weights
 
 Run pretraining with:
@@ -116,7 +120,7 @@ Please download the annotation of the final mixture our instruction tuning data 
 
 - COCO: [train2017](http://images.cocodataset.org/zips/train2017.zip)
 - GQA: [images](https://downloads.cs.stanford.edu/nlp/data/gqa/images.zip)
-- OCR-VQA: [download script](https://drive.google.com/drive/folders/1_GYPY5UkUy7HIcR0zq3ZCFgeZN7BAfm_?usp=sharing), **we save all files as `.jpg`**
+- OCR-VQA: [images](https://huggingface.co/datasets/qnguyen3/ocr_vqa), **we save all files as `.jpg`**
 - TextVQA: [train_val_images](https://dl.fbaipublicfiles.com/textvqa/images/train_val_images.zip)
 - VisualGenome: [part1](https://cs.stanford.edu/people/rak248/VG_100K_2/images.zip), [part2](https://cs.stanford.edu/people/rak248/VG_100K_2/images2.zip)
 
