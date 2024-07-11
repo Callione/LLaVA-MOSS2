@@ -31,14 +31,14 @@ LLaVA-MOSS2 adopts the training pipeline of LLaVA, which consists of two stages:
 
 To train on fewer GPUs, you can reduce the `per_device_train_batch_size` and increase the `gradient_accumulation_steps` accordingly. Always keep the global batch size the same: `per_device_train_batch_size` x `gradient_accumulation_steps` x `num_gpus`.
 
-### Construct new checkpoint: 
+### Construct new checkpoint:
 
 Get a new MOSS2 checkpoint with the following two steps:
 
 1. Download our base model MOSS-2 2.5B: [https://huggingface.co/fnlp/moss2-2_5b-chat](https://huggingface.co/fnlp/moss2-2_5b-chat)
 2. Replace the origin `config.json` file in the checkpoint with the following content.
 
-The second step changed model_type to "llava_moss2", and added some multimodal hyperparameters.
+The second step changed the model_type to "llava_moss2", and added some multimodal hyperparameters.
 
 ```json
 {
@@ -89,18 +89,24 @@ The second step changed model_type to "llava_moss2", and added some multimodal h
 
 ```
 
-
-
 ### Pretrain (feature alignment)
 
 Please download the 558K subset of the LAION-CC-SBU dataset with BLIP captions, data is [here](https://huggingface.co/datasets/liuhaotian/LLaVA-Pretrain).
 
 Training script with DeepSpeed ZeRO-2: [`pretrain.sh`](https://github.com/haotian-liu/LLaVA/blob/main/scripts/v1_5/pretrain.sh).
 
-- `--mm_projector_type mlp2x_gelu`: the two-layer MLP vision-language connector.
-- `--vision_tower openai/clip-vit-large-patch14-336`: CLIP ViT-L/14 336px.
+- `--model_name_or_path`: set this with path to the checkpoint
+- `--data_path`: set this with path to json file of pretrain data
+- `--image_folder`: set this with path to the image folder of the pretrain data
+- `--output_dir`: set this dir for saving the pretrained weights
 
-Training script with DeepSpeed is [here](https://github.com/haotian-liu/LLaVA/blob/main/scripts/pretrain_xformers.sh).
+Run pretraining with
+
+```shell
+bash ./scripts/pretrain.sh
+```
+
+After pretraining, the parameter of the mlp projector will be saved in the output_dir, you should see a file named `mm_projector.bin`
 
 ### Visual Instruction Tuning
 
@@ -134,19 +140,20 @@ After downloading all of them, organize the data as follows in `./playground/dat
 
 Training script with DeepSpeed ZeRO-3: [`finetune.sh`](https://github.com/haotian-liu/LLaVA/blob/main/scripts/v1_5/finetune.sh).
 
-If you are do not have enough GPU memory:
+set the following parameters:
 
-- Use LoRA: [`finetune_lora.sh`](https://github.com/haotian-liu/LLaVA/blob/main/scripts/v1_5/finetune_lora.sh). We are able to fit 13B training in 8-A100-40G/8-A6000, and 7B training in 8-RTX3090. Make sure `per_device_train_batch_size*gradient_accumulation_steps` is the same as the provided script for best reproducibility.
-- Replace `zero3.json` with `zero3_offload.json` which offloads some parameters to CPU RAM. This slows down the training speed.
+* `--model_name_or_path`: path to constructed moss2 checkpoint
+* `--pretrain_mm_mlp_adapter`: path to pretrained linear projector weight
+* `--output_dir`: path for saving finetuned model weight
 
-If you are interested in finetuning LLaVA-like model to your own task/data, please check out [`Finetune_Custom_Data.md`](https://github.com/haotian-liu/LLaVA/blob/main/docs/Finetune_Custom_Data.md)。
+Run finetuning with
 
-New options to note:
+```shell
+bash ./scripts/finetune.sh
+```
 
-- `--mm_projector_type mlp2x_gelu`: the two-layer MLP vision-language connector.
-- `--vision_tower openai/clip-vit-large-patch14-336`: CLIP ViT-L/14 336px.
-- `--image_aspect_ratio pad`: this pads the non-square images to square, instead of cropping them; it slightly reduces hallucination.
-- `--group_by_modality_length True`: this should only be used when your instruction tuning dataset contains both language (e.g. ShareGPT) and multimodal (e.g. LLaVA-Instruct). It makes the training sampler only sample a single modality (either image or language) during training, which we observe to speed up training by ~25%, and does not affect the final outcome.
+After finetuning, the model weight will be saved in the `output_dir` , you should see a file named `pytorch_model.bin`
+
 
 ## CLI Inference
 
@@ -161,7 +168,6 @@ python -m llava.serve.cli \
     --load-4bit
     --conv-mode llava_llama_2
 ```
-
 
 <img src="images/demo_cli.gif" width="70%">
 

@@ -4,9 +4,8 @@
 
 # Uncomment and set the following variables correspondingly to run this script:
 
-# MODEL_VERSION=vicuna-v1-3-7b
-# MODEL_VERSION=llama-2-7b-chat
-# MODEL_VERSION=moss2-2_5b-chat
+
+MODEL_VERSION=moss2-2_5b-chat
 
 ########### DO NOT CHANGE ###########
 ########### USE THIS FOR BOTH ###########
@@ -15,7 +14,7 @@ PROMPT_VERSION=plain
 
 deepspeed llava/train/train_mem.py \
     --deepspeed ./scripts/zero2.json \
-    --model_name_or_path ./checkpoints/$MODEL_VERSION \
+    --model_name_or_path /path-to-ckpt-parent-dir/$MODEL_VERSION \
     --version $PROMPT_VERSION \
     --data_path /path/to/pretrain_data.json \
     --image_folder /path/to/images \

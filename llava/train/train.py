@@ -193,7 +193,7 @@ def safe_save_model_for_hf_trainer(trainer: transformers.Trainer,
             keys_to_match.extend(['embed_tokens', 'embed_in'])
 
         weight_to_save = get_mm_adapter_state_maybe_zero_3(trainer.model.named_parameters(), keys_to_match)
-        trainer.model.config.save_pretrained(output_dir)
+        # trainer.model.config.save_pretrained(output_dir)
 
         current_folder = output_dir.split('/')[-1]
         parent_folder = os.path.dirname(output_dir)
@@ -208,7 +208,14 @@ def safe_save_model_for_hf_trainer(trainer: transformers.Trainer,
 
     if trainer.deepspeed:
         torch.cuda.synchronize()
-        trainer.save_model(output_dir)
+        # trainer.save_model(output_dir)
+        # return
+        cpu_state_dict = {
+            key: value.cpu().to(torch.bfloat16)
+            for key, value in state_dict.items()
+        }
+        del state_dict
+        torch.save(cpu_state_dict,os.path.join(output_dir,'pytorch_model.bin'))
         return
 
     state_dict = trainer.model.state_dict()
@@ -218,7 +225,8 @@ def safe_save_model_for_hf_trainer(trainer: transformers.Trainer,
             for key, value in state_dict.items()
         }
         del state_dict
-        trainer._save(output_dir, state_dict=cpu_state_dict)  # noqa
+        # trainer._save(output_dir, state_dict=cpu_state_dict)  # noqa
+        torch.save(cpu_state_dict,os.path.join(output_dir,'pytorch_model.bin'))
 
 
 def smart_tokenizer_and_embedding_resize(
