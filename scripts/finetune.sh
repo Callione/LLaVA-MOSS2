@@ -14,6 +14,12 @@
 # MODEL_VERSION="llama-2-7b-chat"
 ################## LLaMA-2 ##################
 
+################## LLaVA-MOSS2 #############
+# PROMPT_VERSION="llava_llama_2"
+# MODEL_VERSION="moss2-2_5b-chat"
+################## LLaVA-MOSS2 #############
+
+
 deepspeed llava/train/train_mem.py \
     --deepspeed ./scripts/zero2.json \
     --model_name_or_path ./checkpoints/$MODEL_VERSION \

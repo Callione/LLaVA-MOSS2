@@ -6,6 +6,7 @@
 
 # MODEL_VERSION=vicuna-v1-3-7b
 # MODEL_VERSION=llama-2-7b-chat
+# MODEL_VERSION=moss2-2_5b-chat
 
 ########### DO NOT CHANGE ###########
 ########### USE THIS FOR BOTH ###########
