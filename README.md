@@ -93,14 +93,14 @@ The second step changed the model_type to "llava_moss2", and added some multimod
 
 Please download the 558K subset of the LAION-CC-SBU dataset with BLIP captions, data is [here](https://huggingface.co/datasets/liuhaotian/LLaVA-Pretrain).
 
-Training script with DeepSpeed ZeRO-2: [`pretrain.sh`](https://github.com/haotian-liu/LLaVA/blob/main/scripts/v1_5/pretrain.sh).
+Training script with DeepSpeed ZeRO-2: [`./scripts/pretrain.sh`](https://github.com/haotian-liu/LLaVA/blob/main/scripts/pretrain.sh).
 
 - `--model_name_or_path`: set this with path to the checkpoint
 - `--data_path`: set this with path to json file of pretrain data
 - `--image_folder`: set this with path to the image folder of the pretrain data
 - `--output_dir`: set this dir for saving the pretrained weights
 
-Run pretraining with
+Run pretraining with:
 
 ```shell
 bash ./scripts/pretrain.sh
@@ -138,7 +138,7 @@ After downloading all of them, organize the data as follows in `./playground/dat
 
 2. Start training!
 
-Training script with DeepSpeed ZeRO-3: [`finetune.sh`](https://github.com/haotian-liu/LLaVA/blob/main/scripts/v1_5/finetune.sh).
+Training script with DeepSpeed ZeRO-2: [`finetune.sh`](https://github.com/haotian-liu/LLaVA/blob/main/scripts/finetune.sh).
 
 set the following parameters:
 
@@ -146,7 +146,7 @@ set the following parameters:
 * `--pretrain_mm_mlp_adapter`: path to pretrained linear projector weight
 * `--output_dir`: path for saving finetuned model weight
 
-Run finetuning with
+Run finetuning with:
 
 ```shell
 bash ./scripts/finetune.sh
