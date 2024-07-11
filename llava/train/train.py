@@ -823,6 +823,13 @@ def train(attn_implementation=None):
                 cache_dir=training_args.cache_dir,
                 **bnb_model_from_pretrained_args
             )
+        elif 'moss2' in model_args.model_name_or_path:
+            import llava.model.language_model.llava_moss2 as lmo2
+            model = lmo2.LlavaMoss2ForCausalLM.from_pretrained(model_args.model_name_or_path)
+            if model_args.pretrain_mm_mlp_adapter is not None:
+                mm_projector_weights = torch.load(model_args.pretrain_mm_mlp_adapter, map_location='cpu')
+                mm_projector_weights = {k: v.to(torch.float16) for k, v in mm_projector_weights.items()}
+                model.load_state_dict(mm_projector_weights, strict=False)
         else:
             model = LlavaLlamaForCausalLM.from_pretrained(
                 model_args.model_name_or_path,
@@ -883,12 +890,9 @@ def train(attn_implementation=None):
             padding_side="right"
         )
     elif 'moss2' in model_args.model_name_or_path:
-        import llava.model.language_model.llava_moss2 as lmo2
-        model = lmo2.LlavaMoss2ForCausalLM.from_pretrained(model_args.model_name_or_path)
-        if model_args.pretrain_mm_mlp_adapter is not None:
-            mm_projector_weights = torch.load(model_args.pretrain_mm_mlp_adapter, map_location='cpu')
-            mm_projector_weights = {k: v.to(torch.float16) for k, v in mm_projector_weights.items()}
-            model.load_state_dict(mm_projector_weights, strict=False)
+        from llava.model.language_model.moss.tokenization_moss2 import Moss2Tokenizer
+        tokenizer = Moss2Tokenizer.from_pretrained(model_args.model_name_or_path)
+
     else:
         tokenizer = transformers.AutoTokenizer.from_pretrained(
             model_args.model_name_or_path,
