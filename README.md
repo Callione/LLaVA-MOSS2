@@ -138,7 +138,7 @@ After downloading all of them, organize the data as follows in `./playground/dat
 
 2. Start training!
 
-Training script with DeepSpeed ZeRO-2: [`finetune.sh`](https://github.com/haotian-liu/LLaVA/blob/main/scripts/finetune.sh).
+Training script with DeepSpeed ZeRO-2: [`./scripts/finetune.sh`](https://github.com/haotian-liu/LLaVA/blob/main/scripts/finetune.sh).
 
 set the following parameters:
 
@@ -153,7 +153,6 @@ bash ./scripts/finetune.sh
 ```
 
 After finetuning, the model weight will be saved in the `output_dir` , you should see a file named `pytorch_model.bin`
-
 
 ## CLI Inference
 
