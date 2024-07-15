@@ -13,7 +13,7 @@ MODEL_VERSION="moss2-2_5b-chat"
 
 deepspeed llava/train/train_mem.py \
     --deepspeed ./scripts/zero2.json \
-    --model_name_or_path ./checkpoints/$MODEL_VERSION \
+    --model_name_or_path path_to_ckpt/$MODEL_VERSION \
     --version $PROMPT_VERSION \
     --data_path ./playground/data/llava_v1_5_mix665k.json \
     --image_folder ./playground/data \
