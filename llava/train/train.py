@@ -210,6 +210,9 @@ def safe_save_model_for_hf_trainer(trainer: transformers.Trainer,
         torch.cuda.synchronize()
         # trainer.save_model(output_dir)
         # return
+
+        state_dict = trainer.accelerator.get_state_dict(trainer.deepspeed)
+
         cpu_state_dict = {
             key: value.cpu().to(torch.bfloat16)
             for key, value in state_dict.items()
@@ -898,7 +901,7 @@ def train(attn_implementation=None):
             padding_side="right"
         )
     elif 'moss2' in model_args.model_name_or_path:
-        from llava.model.language_model.moss.tokenization_moss2 import Moss2Tokenizer
+        from llava.model.language_model.tokenization_moss2 import Moss2Tokenizer
         tokenizer = Moss2Tokenizer.from_pretrained(model_args.model_name_or_path)
 
     else:

@@ -98,8 +98,7 @@ Please download the 558K subset of the LAION-CC-SBU dataset with BLIP captions, 
 └── image
 ```
 
-
-Training script with DeepSpeed ZeRO-2: [`./scripts/pretrain.sh`](https://github.com/haotian-liu/LLaVA/blob/main/scripts/pretrain.sh).
+Training script with DeepSpeed ZeRO-2: [`./scripts/pretrain.sh`](./scripts/pretrain.sh).
 
 - `--model_name_or_path`: set this with path to the checkpoint
 - `--output_dir`: set this dir for saving the pretrained weights
@@ -116,7 +115,7 @@ After pretraining, the parameter of the mlp projector will be saved in the outpu
 
 1. Prepare data
 
-Please download the annotation of the final mixture our instruction tuning data [llava_v1_5_mix665k.json](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K/blob/main/llava_v1_5_mix665k.json), and download the images from constituting datasets:
+Please download the instruction tuning data of LLaVA-v1.5: [llava_v1_5_mix665k.json](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K/blob/main/llava_v1_5_mix665k.json) and place it in `./playground/data/`, and download the images from constituting datasets:
 
 - COCO: [train2017](http://images.cocodataset.org/zips/train2017.zip)
 - GQA: [images](https://downloads.cs.stanford.edu/nlp/data/gqa/images.zip)
@@ -142,7 +141,7 @@ After downloading all of them, organize the data as follows in `./playground/dat
 
 2. Start training!
 
-Training script with DeepSpeed ZeRO-2: [`./scripts/finetune.sh`](https://github.com/haotian-liu/LLaVA/blob/main/scripts/finetune.sh).
+Training script with DeepSpeed ZeRO-2: [`./scripts/finetune.sh`](./scripts/finetune.sh).
 
 set the following parameters:
 
@@ -166,7 +165,7 @@ Chat about images with LLaVA-MOSS2. It also supports multiple GPUs, 4-bit and 8-
 
 ```Shell
 python -m llava.serve.cli \
-    --model-path liuhaotian/llava-v1.5-7b \
+    --model-path path_to_ckpt/llava-moss2-2_5b-chat-finetune \
     --image-file "https://llava-vl.github.io/static/images/view.jpg" \
     --load-4bit
     --conv-mode llava_llama_2

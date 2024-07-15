@@ -114,7 +114,7 @@ def load_pretrained_model(model_path, model_base, model_name, load_8bit=False, l
                 )
             elif 'moss2' in model_name.lower():
                 import llava.model.language_model.llava_moss2 as lmo2
-                from .language_model.moss.tokenization_moss2 import Moss2Tokenizer
+                from .language_model.tokenization_moss2 import Moss2Tokenizer
                 tokenizer = Moss2Tokenizer.from_pretrained(model_path,use_fast=True)
                 print('loading llava_moss2')
                 model = lmo2.LlavaMoss2ForCausalLM.from_pretrained(model_path, low_cpu_mem_usage=True, **kwargs)

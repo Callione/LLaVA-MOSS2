@@ -24,9 +24,14 @@ from transformers import AutoConfig, AutoModel, AutoModelForCausalLM
 from transformers.modeling_outputs import CausalLMOutputWithPast
 from transformers.generation.utils import GenerateOutput
 
-from ..llava_arch_moss import LlavaMetaModel, LlavaMetaForCausalLM
-from .moss.configuration_moss2 import Moss2Config
-from .moss.modeling_moss2 import Moss2Model, Moss2ForCausalLM
+import sys
+import os
+
+# 
+
+from llava.model.llava_arch_moss import LlavaMetaModel, LlavaMetaForCausalLM
+from llava.model.language_model.configuration_moss2 import Moss2Config
+from llava.model.language_model.modeling_moss2 import Moss2Model, Moss2ForCausalLM
 
 class LlavaMoss2Config(Moss2Config):
     model_type = "llava_moss2"

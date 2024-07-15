@@ -14,10 +14,10 @@ PROMPT_VERSION=plain
 
 deepspeed llava/train/train_mem.py \
     --deepspeed ./scripts/zero2.json \
-    --model_name_or_path /path-to-ckpt-parent-dir/$MODEL_VERSION \
+    --model_name_or_path ./checkpoints/$MODEL_VERSION \
     --version $PROMPT_VERSION \
-    --data_path ./playground/data/pretrain/blip_laion_cc_sbu_558k.json \
-    --image_folder ./playground/data/pretrain/images \
+    --data_path ./playground/data/LLaVA-Pretrain/blip_laion_cc_sbu_558k.json \
+    --image_folder ./playground/data/LLaVA-Pretrain/images \
     --vision_tower openai/clip-vit-large-patch14 \
     --tune_mm_mlp_adapter True \
     --mm_vision_select_layer -2 \
@@ -25,14 +25,14 @@ deepspeed llava/train/train_mem.py \
     --mm_use_im_patch_token False \
     --bf16 True \
     --output_dir ./checkpoints/llava-$MODEL_VERSION-pretrain \
-    --num_train_epochs 1 \
+    --max_steps 5000 \
     --per_device_train_batch_size 16 \
     --per_device_eval_batch_size 4 \
-    --gradient_accumulation_steps 1 \
+    --gradient_accumulation_steps 2 \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
-    --save_steps 24000 \
-    --save_total_limit 1 \
+    --save_steps 1000 \
+    --save_total_limit 5 \
     --learning_rate 2e-3 \
     --weight_decay 0. \
     --warmup_ratio 0.03 \
@@ -43,4 +43,5 @@ deepspeed llava/train/train_mem.py \
     --gradient_checkpointing True \
     --dataloader_num_workers 4 \
     --lazy_preprocess True \
-    --report_to wandb
+    --report_to wandb \
+    --run_name llava-moss2-pretrain
