@@ -155,7 +155,20 @@ Run finetuning with:
 bash ./scripts/finetune.sh
 ```
 
-After finetuning, the model weight will be saved in the `output_dir` , you should see a file named `pytorch_model.bin`
+After finetuning, the model weight will be saved in the `output_dir` , you should see a file named `pytorch_model.bin`. In order to get a model that can perform effective inference, you need to copy all the files in the base model [moss2-2_5b-chat](https://huggingface.co/fnlp/moss2-2_5b-chat) except `pytorch_model.bin` to the same level directory as the trained `pytorch_model.bin`. The organized directory structure is as follows:
+```
+.
+├── config.json
+├── configuration_moss2.py
+├── generation_config.json
+├── modeling_moss2.py
+├── pytorch_model.bin
+├── special_tokens_map.json
+├── tokenization_moss2.py
+├── tokenizer_config.json
+├── tokenizer.model
+└── trainer_state.json
+```
 
 ## CLI Inference
 
