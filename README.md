@@ -119,7 +119,7 @@ Please download the instruction tuning data of LLaVA-v1.5: [llava_v1_5_mix665k.j
 
 - COCO: [train2017](http://images.cocodataset.org/zips/train2017.zip)
 - GQA: [images](https://downloads.cs.stanford.edu/nlp/data/gqa/images.zip)
-- OCR-VQA: [images]([https://huggingface.co/datasets/qnguyen3/ocr_vqa](https://huggingface.co/datasets/weizhiwang/llava_v15_instruction_images/resolve/main/ocr_vqa_images_llava_v15.zip?download=true), after downloading, unzip it to the path `./ocr_vqa/images`
+- OCR-VQA: [images](https://huggingface.co/datasets/qnguyen3/ocr_vqa](https://huggingface.co/datasets/weizhiwang/llava_v15_instruction_images/resolve/main/ocr_vqa_images_llava_v15.zip?download=true), after downloading, unzip it to the path `./ocr_vqa/images`
 - TextVQA: [train_val_images](https://dl.fbaipublicfiles.com/textvqa/images/train_val_images.zip)
 - VisualGenome: [part1](https://cs.stanford.edu/people/rak248/VG_100K_2/images.zip), [part2](https://cs.stanford.edu/people/rak248/VG_100K_2/images2.zip)
 
