@@ -91,7 +91,7 @@ The second step changed the model_type to "llava_moss2", and added some multimod
 
 ### Pretrain (feature alignment)
 
-Please download the 558K subset of the LAION-CC-SBU dataset with BLIP captions, data is [here](https://huggingface.co/datasets/liuhaotian/LLaVA-Pretrain). Put the in directory `./playground/data/pretrain`, organize them as follows:
+Please download the 558K subset of the LAION-CC-SBU dataset with BLIP captions, data is [here](https://huggingface.co/datasets/liuhaotian/LLaVA-Pretrain/tree/main). Put the in directory `./playground/data/pretrain`, organize them as follows:
 
 ```
 ├── blip_laion_cc_sbu_558k.json
