@@ -180,7 +180,7 @@ Chat about images with LLaVA-MOSS2. It also supports multiple GPUs, 4-bit and 8-
 
 ```Shell
 python -m llava.serve.cli \
-    --model-path path_to_ckpt/llava-moss2-2_5b-chat-finetune \
+    --model-path red-fox-yj/llava-moss2-2_5b-chat \
     --image-file "https://llava-vl.github.io/static/images/view.jpg" \
     --load-4bit
     --conv-mode llava_llama_2
