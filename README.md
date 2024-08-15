@@ -174,7 +174,7 @@ In order to get a model that can perform effective inference, you need to copy a
 
 ## CLI Inference
 
-Chat about images with LLaVA-MOSS2. It also supports multiple GPUs, 4-bit and 8-bit quantized inference.
+Chat about images with LLaVA-MOSS2. It also supports multiple GPUs, 4-bit and 8-bit quantized inference.You can use your own trained model or [the model we uploaded to huggingface](https://huggingface.co/red-fox-yj/llava-moss2-2_5b-chat/tree/main), just replace the --model_patch parameter
 
 * `--conv-mode`　conversation mode should be set to align with finetuning stage
 
