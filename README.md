@@ -183,7 +183,6 @@ python -m llava.serve.cli \
     --model-path red-fox-yj/llava-moss2-2_5b-chat \
     --image-file "https://llava-vl.github.io/static/images/view.jpg" \
     --load-4bit
-    --conv-mode llava_llama_2
 ```
 
 <img src="images/demo_cli.gif" width="70%">
